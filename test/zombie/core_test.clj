@@ -1,7 +1,16 @@
 (ns zombie.core-test
-  (:use clojure.test
-        zombie.core))
+  (:require [midje.sweet :refer :all]
+            [zombie.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(fact
+ (let [mike {:age 21}
+       bill (is-like mike (but-it (has-a-different :age)))]
+   (not= (:age mike) (:age bill)))
+ => true)
+
+(fact
+ (let [mike {:favorite-color "green"}
+       owen (is-like mike (but-it (has-a-different :favorite-color)))]
+   (not= (:favorite-color mike) (:favorite-color owen)))
+ => true)
+
