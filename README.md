@@ -6,7 +6,7 @@ A Clojure library designed to facilitate quick generation of test case data. Som
 
 Add the following to your `:dependencies`
 
-`[zombie "0.0.1"]`
+```[zombie "0.0.1"]```
 
 ## Usage
 
