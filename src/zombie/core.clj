@@ -57,3 +57,9 @@
 (defn has-a-later [description attribute]
   (birth-with-new-time description attribute time/plus))
 
+(defn generated-exprs [exprs]
+  (vec (concat exprs (vec ['all (into [] (take-nth 2 (drop 1 exprs)))]))))
+
+(defmacro specified-by [exprs & body]
+  `(let ~(generated-exprs exprs) ~@body))
+

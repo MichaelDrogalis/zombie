@@ -57,3 +57,16 @@
    (time/before? (:birthday mike) (:birthday kyle)))
  => true)
 
+(specified-by
+ [mike {:age 21}
+  owen {:age 28}
+  bill {:age 30}]
+ (fact all => [mike owen bill]))
+
+(specified-by
+ [my-expectations {:grade :A}
+  _               {:grade :B}
+  _               {:grade :C}]
+ (fact (count all) => 3)
+ (fact (apply not= all) => true))
+
