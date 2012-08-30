@@ -38,6 +38,9 @@
 (defn has-a-different [description attribute]
   (birth-a-different (attribute description) description attribute))
 
+(defn has-a-smaller [description attribute]
+  (assoc description attribute (dec (attribute description))))
+
 (defn has-no [description attribute]
   (empty-value-for (attribute description) description attribute))
 

@@ -70,3 +70,19 @@
  (fact (count all) => 3)
  (fact (apply not= all) => true))
 
+(fact
+ (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
+       plain     (is-like pepperoni (but-it (has-a-smaller :price)
+                                            (has-no :toppings)))]
+   (< (:price plain) (:price pepperoni)))
+ => true)
+
+(fact
+ (let [mike {:age 21 :favorite-color "green" :favorite-language "Clojure"}
+       pete (is-like mike (but-it (has-a-different :favorite-color)
+                                  (has-a-different :favorite-language)))]
+   (and (not= (:favorite-color mike) (:favorite-color pete))
+        (not= (:favorite-language mike) (:favorite-language pete))
+        (= (:age mike) (:age pete))))
+ => true)
+
