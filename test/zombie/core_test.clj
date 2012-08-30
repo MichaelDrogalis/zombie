@@ -27,7 +27,20 @@
  => true)
 
 (fact
+ (let [greg {:cats [:boots]}
+       mike (is-like greg (but-it (has-no :cats)))]
+   (:cats mike))
+ => [])
+
+(fact
  (let [bill {:linen-pants-collection [:gray, :blue, :green]}
        mike (is-like bill (but-it (has-a-nil :linen-pants-collection)))]
    (nil? (:linen-pants-collection mike)))
  => true)
+
+(fact
+ (let [mike {}
+       bill (is-like mike (but-it (has-a :car :red)))]
+   (:car bill))
+ => :red)
+

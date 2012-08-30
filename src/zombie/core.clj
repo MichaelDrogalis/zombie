@@ -28,6 +28,12 @@
    [this description attribute]
    (assoc description attribute "")))
 
+(extend-type clojure.lang.PersistentVector
+  Differentiate
+  (zero-out
+   [this description attribute]
+   (assoc description attribute []))) 
+
 (defn has-a-different [description attribute]
   (birth-a-different (attribute description) description attribute))
 
@@ -36,3 +42,7 @@
 
 (defn has-a-nil [description attribute]
   (assoc description attribute nil))
+
+(defn has-a [description attribute value]
+  (assoc description attribute value))
+
