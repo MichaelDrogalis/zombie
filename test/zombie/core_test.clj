@@ -16,9 +16,9 @@
  => true)
 
 (fact
- (let [mike {:friends 5}
-       owen (is-like mike (but-it (has-no :friends)))]
-   (:friends owen))
+ (let [mike {:parking-tickets 5}
+       owen (is-like mike (but-it (has-no :parking-tickets)))]
+   (:parking-tickets owen))
    => 0)
 
 (fact
