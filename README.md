@@ -47,6 +47,16 @@ A `specified-by` function allows access to all the vars via a var named 'all'. D
         
 Check out the [tests](https://github.com/MichaelDrogalis/zombie/blob/master/test/zombie/core_test.clj) for more examples.
 
+## Extending the API
+
+For functions `has-no` and `has-a-different`, the API can be extended to dispatch to specific types. Suppose you wanted an implementation of `has-no` to work on a map:
+
+    (extend-type clojure.lang.PersistentArrayMap
+      Differentiate
+      (empty-value-for
+       [this description attribute]
+       (assoc description attribute {}))) 
+
 ## License
 
 Copyright © 2012 Michael Drogalis
