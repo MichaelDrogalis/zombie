@@ -57,6 +57,14 @@ For functions `has-no` and `has-a-different`, the API can be extended to dispatc
        [this description attribute]
        (assoc description attribute {}))) 
 
+Then you could do:
+
+    (fact
+     (let [mike {:grades {:math B :science A :english A}}
+           some-dude (is-like mike (but-it (has-no :grades)))]
+       (empty? (:grade some-dude)))
+     => true)
+
 ## License
 
 Copyright © 2012 Michael Drogalis
