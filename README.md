@@ -60,7 +60,7 @@ For functions `has-no` and `has-a-different`, the API can be extended to dispatc
 Then you could do:
 
     (fact
-     (let [mike {:grades {:math B :science A :english A}}
+     (let [mike {:grades {:math :B :science :A :english :A}}
            some-dude (is-like mike (but-it (has-no :grades)))]
        (empty? (:grade some-dude)))
      => true)
