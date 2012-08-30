@@ -11,6 +11,7 @@ Add the following to your `:dependencies`
 ## Usage
 
 Here's an example of some typical test data:
+
     (fact
      (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
            plain     {:price 8.99 :toppings [] :size :medium}]
@@ -18,6 +19,7 @@ Here's an example of some typical test data:
      => true)
 
 Here's what that looks like with Zombie:
+
     (fact
      (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
            plain     (is-like pepperoni (but-it (has-a-smaller :price)
