@@ -1,6 +1,6 @@
 (defproject zombie "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "Clojure test data specifications that won't make you want to punch a window."
+  :url "https://github.com/MichaelDrogalis/zombie"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :repositories {"stuart" "http://stuartsierra.com/maven2"}  
