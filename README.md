@@ -18,6 +18,16 @@ Here's a grossly simplified example of data creation with Zombie:
        (not= (:age mike) (:age bill)))
      => true)
 
+Data can be manipulated with the following methods:
+    
+    has-a-different
+    has-a-smaller
+    has-no
+    has-a-nil
+    has-a
+    has-an-earlier
+    has-a-later
+
 Time can be manipulated:
 
     (fact
