@@ -53,3 +53,7 @@ Copyright © 2012 Michael Drogalis
 
 Distributed under the Eclipse Public License, the same as Clojure.
 
+## Thanks
+
+Special thanks to [RJMetrics](http://www.rjmetrics.com/) for letting me open-source this project. I developed this library while working there.
+
