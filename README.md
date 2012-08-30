@@ -6,7 +6,7 @@ A Clojure library to facilitate abstract creation of test data. Sometimes you do
 
 Add the following to your `:dependencies`
 
-    [zombie "0.0.1"]
+    [zombie "0.1.0-SNAPSHOT"]
 
 ## Usage
 
