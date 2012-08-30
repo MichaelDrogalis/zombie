@@ -10,22 +10,34 @@ Add the following to your `:dependencies`
 
 ## Usage
 
-Here's an example of some typical test data:
+
+
+Here's a grossly simplified example of data creation with Zombie:
 
     (fact
-     (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
-           plain     {:price 8.99 :toppings [] :size :medium}]
-       (< (:price plain) (:price pepperoni)))
+     (let [mike {:age 21}
+           bill (is-like mike (but-it (has-a-different :age)))]
+       (not= (:age mike) (:age bill)))
      => true)
 
-Here's what that looks like with Zombie:
+Time can be manipulated:
 
     (fact
-     (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
-           plain     (is-like pepperoni (but-it (has-a-smaller :price)
-                                                (has-no :toppings)))]
-       (< (:price plain) (:price pepperoni)))
+     (let [mike {:birthday (time/date-time 1991 1 13)}
+           owen (is-like mike (but-it (has-an-earlier :birthday)))]
+       (time/before? (:birthday owen) (:birthday mike)))
      => true)
+
+A `specified-by` function allows access to all the vars via a var named 'all'. Data can then be anonymously named.
+
+    (specified-by
+     [my-expectations {:grade :A}
+      _               {:grade :B}
+      _               {:grade :C}]
+     (fact (count all) => 3)
+     (fact (apply not= all) => true))
+        
+Check out the tests[https://github.com/MichaelDrogalis/zombie/blob/master/test/zombie/core_test.clj] for more examples.
 
 ## License
 
