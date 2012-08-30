@@ -47,11 +47,13 @@
 (defn has-a [description attribute value]
   (assoc description attribute value))
 
-(defn has-an-earlier [description attribute]
+(defn birth-with-new-time [description attribute f]
   (assoc description attribute
-         (time/minus (attribute description) (time/days 1))))
+         (f (attribute description) (time/days 1))))
+
+(defn has-an-earlier [description attribute]
+  (birth-with-new-time description attribute time/minus))
 
 (defn has-a-later [description attribute]
-  (assoc description attribute
-         (time/plus (attribute description) (time/days 1))))
+  (birth-with-new-time description attribute time/plus))
 
