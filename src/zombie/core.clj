@@ -1,4 +1,5 @@
-(ns zombie.core)
+(ns zombie.core
+  (:require [clj-time.core :as time]))
 
 (defmacro is-like [description & disparity]
   `(-> ~description ~@disparity))
@@ -45,4 +46,12 @@
 
 (defn has-a [description attribute value]
   (assoc description attribute value))
+
+(defn has-an-earlier [description attribute]
+  (assoc description attribute
+         (time/minus (attribute description) (time/days 1))))
+
+(defn has-a-later [description attribute]
+  (assoc description attribute
+         (time/plus (attribute description) (time/days 1))))
 

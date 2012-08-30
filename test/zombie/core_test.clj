@@ -1,5 +1,6 @@
 (ns zombie.core-test
   (:require [midje.sweet :refer :all]
+            [clj-time.core :as time]
             [zombie.core :refer :all]))
 
 (fact
@@ -44,3 +45,14 @@
    (:car bill))
  => :red)
 
+(fact
+ (let [mike {:birthday (time/date-time 1991 1 13)}
+       owen (is-like mike (but-it (has-an-earlier :birthday)))]
+   (time/before? (:birthday owen) (:birthday mike)))
+ => true)
+
+(fact
+ (let [mike {:birthday (time/date-time 1991 1 13)}
+       kyle (is-like mike (but-it (has-a-later :birthday)))]
+   (time/before? (:birthday mike) (:birthday kyle)))
+ => true)
