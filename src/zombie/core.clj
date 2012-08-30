@@ -9,14 +9,14 @@
 
 (defprotocol Differentiate
   (birth-a-different [this description attribute])
-  (zero-out [this description attribute]))
+  (empty-value-for [this description attribute]))
 
 (extend-type Number
   Differentiate
   (birth-a-different
    [this description attribute]
    (assoc description attribute (inc (attribute description))))
-  (zero-out
+  (empty-value-for
    [this description attribute]
    (assoc description attribute 0)))
 
@@ -25,13 +25,13 @@
   (birth-a-different
    [this description attribute]
    (assoc description attribute (str (attribute description) "x")))
-  (zero-out
+  (empty-value-for
    [this description attribute]
    (assoc description attribute "")))
 
 (extend-type clojure.lang.PersistentVector
   Differentiate
-  (zero-out
+  (empty-value-for
    [this description attribute]
    (assoc description attribute []))) 
 
@@ -39,7 +39,7 @@
   (birth-a-different (attribute description) description attribute))
 
 (defn has-no [description attribute]
-  (zero-out (attribute description) description attribute))
+  (empty-value-for (attribute description) description attribute))
 
 (defn has-a-nil [description attribute]
   (assoc description attribute nil))
