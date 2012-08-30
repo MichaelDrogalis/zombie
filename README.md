@@ -37,7 +37,7 @@ A `specified-by` function allows access to all the vars via a var named 'all'. D
      (fact (count all) => 3)
      (fact (apply not= all) => true))
         
-Check out the tests[https://github.com/MichaelDrogalis/zombie/blob/master/test/zombie/core_test.clj] for more examples.
+Check out the [tests](https://github.com/MichaelDrogalis/zombie/blob/master/test/zombie/core_test.clj) for more examples.
 
 ## License
 
