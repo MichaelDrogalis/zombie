@@ -1,6 +1,6 @@
 # zombie
 
-A Clojure library designed to facilitate quick generation of test case data. Sometimes test cases can be simplified by amplifying the differences between data, while at the same time ignoring any similiarities. It's sort of like [QuickCheck](http://www.haskell.org/haskellwiki/Introduction_to_QuickCheck). This is best shown by the examples below.
+A Clojure library to facilitate abstract creation of test data. Sometimes you don't care about the concrete differences between data. Test cases can be simplified by amplifying the differences between data, while at the same time ignoring any similiarities. It's sort of like [QuickCheck](http://www.haskell.org/haskellwiki/Introduction_to_QuickCheck). This is best shown by the examples below.
 
 ## Installation
 
@@ -9,8 +9,6 @@ Add the following to your `:dependencies`
     [zombie "0.0.1"]
 
 ## Usage
-
-
 
 Here's a grossly simplified example of data creation with Zombie:
 
