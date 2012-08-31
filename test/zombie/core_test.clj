@@ -57,6 +57,17 @@
    (time/before? (:birthday mike) (:birthday kyle)))
  => true)
 
+(fact
+ (let [mike {:dentist-appointment (time/date-time 2012 8 21)}
+       bill (is-like mike (but-it (has-one-day-later :dentist-appointment)))]
+   (= (:dentist-appointment bill) (time/date-time 2012 8 22)))
+ => true)
+
+(fact
+ (let [mike {:dinner-reservations (time/date-time 2012 8 21)}
+       owen (is-like mike (but-it (has-one-week-later :dinner-reservations)))]
+   (:dinner-reservations owen) => (time/date-time 2012 8 28)))
+
 (specified-by
  [mike {:age 21}
   owen {:age 28}
