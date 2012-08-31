@@ -59,17 +59,24 @@
   "Create a new piece of data with value for attribute."
   (assoc description attribute value))
 
-(defn birth-with-new-time [description attribute f]
-  (assoc description attribute
-         (f (attribute description) (time/days 1))))
+(defn birth-with-new-time [description attribute f units]
+  (assoc description attribute (f (attribute description) (units 1))))
 
 (defn has-an-earlier [description attribute]
-  "Create a new piece of data with earlier DateTime for attribute (further in past)."
-  (birth-with-new-time description attribute time/minus))
+  "Create a new piece of data with an arbitrarily earlier DateTime for attribute (further in past)."
+  (birth-with-new-time description attribute time/minus time/months))
 
 (defn has-a-later [description attribute]
-  "Create a new piece of data with later DateTime for attribute (further in future)."
-  (birth-with-new-time description attribute time/plus))
+  "Create a new piece of data with an arbitrarily later DateTime for attribute (further in future)."
+  (birth-with-new-time description attribute time/plus time/months))
+
+(defn has-one-day-later [description attribute]
+  "Create a new piece of data with attribute one day in the future than it currently is."
+  (birth-with-new-time description attribute time/plus time/days))
+
+(defn has-one-week-later [description attribute]
+  "Create a new piece of data with attribute one week in the future than it currently is."
+  (birth-with-new-time description attribute time/plus time/weeks))
 
 (defn generated-exprs [exprs]
   (vec (concat exprs (vec ['all (into [] (take-nth 2 (drop 1 exprs)))]))))
