@@ -6,44 +6,37 @@
 (fact
  (let [mike {:age 21}
        bill (is-like mike (but-it (has-a-different :age)))]
-   (not= (:age mike) (:age bill)))
- => true)
+   (:age mike) =not=> (:age bill)))
 
 (fact
  (let [mike {:favorite-color "green"}
        owen (is-like mike (but-it (has-a-different :favorite-color)))]
-   (not= (:favorite-color mike) (:favorite-color owen)))
- => true)
+   (:favorite-color mike) =not=> (:favorite-color owen)))
 
 (fact
  (let [mike {:parking-tickets 5}
        owen (is-like mike (but-it (has-no :parking-tickets)))]
-   (:parking-tickets owen))
-   => 0)
+   (:parking-tickets owen)) => 0)
 
 (fact
  (let [mike {:name "Mike"}
        pet-rock (is-like mike (but-it (has-no :name)))]
-   (empty? (:name pet-rock)))
- => true)
+   (:name pet-rock) => ""))
 
 (fact
  (let [greg {:cats [:boots]}
        mike (is-like greg (but-it (has-no :cats)))]
-   (:cats mike))
- => [])
+   (:cats mike)) => [])
 
 (fact
  (let [bill {:linen-pants-collection [:gray, :blue, :green]}
        mike (is-like bill (but-it (has-a-nil :linen-pants-collection)))]
-   (nil? (:linen-pants-collection mike)))
- => true)
+   (:linen-pants-collection mike) => nil))
 
 (fact
  (let [mike {}
        bill (is-like mike (but-it (has-a :car :red)))]
-   (:car bill))
- => :red)
+   (:car bill)) => :red)
 
 (fact
  (let [mike {:birthday (time/date-time 1991 1 13)}
@@ -60,8 +53,7 @@
 (fact
  (let [mike {:dentist-appointment (time/date-time 2012 8 21)}
        bill (is-like mike (but-it (has-one-day-later :dentist-appointment)))]
-   (= (:dentist-appointment bill) (time/date-time 2012 8 22)))
- => true)
+   (:dentist-appointment bill) => (time/date-time 2012 8 22)))
 
 (fact
  (let [mike {:dinner-reservations (time/date-time 2012 8 21)}
