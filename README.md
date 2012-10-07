@@ -1,6 +1,6 @@
 # zombie
 
-A Clojure library to facilitate abstract creation of test data. Sometimes you don't care about the concrete differences between data. Test cases can be simplified by amplifying the differences between data, while at the same time ignoring any similiarities. It's sort of like [QuickCheck](http://www.haskell.org/haskellwiki/Introduction_to_QuickCheck). This is best shown by the examples below.
+A Clojure framework to rapidly generate data sets. Sometimes you don't care about the concrete differences between data. Test cases can be simplified by amplifying the differences between data, while at the same time ignoring any similiarities. It's sort of like [QuickCheck](http://www.haskell.org/haskellwiki/Introduction_to_QuickCheck). This is best shown by the examples below.
 
 ## Installation
 
