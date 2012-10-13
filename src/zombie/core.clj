@@ -9,6 +9,12 @@
   "Articulate the differences between the two pieces of data."
   `(-> ~description ~@disparities))
 
+(defmacro but-he [description & disparities]
+  `(but-it ~description ~@disparities))
+
+(defmacro but-she [description & disparities]
+  `(but-it ~description ~@disparities))
+
 (defprotocol Differentiate
   "Protocol for how to birth new values from old ones"
   (birth-a-different [this description attribute])
