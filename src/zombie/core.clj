@@ -52,6 +52,9 @@
   "Create a new piece of data with a smaller numeric value for attribute."
   (assoc description attribute (dec (attribute description))))
 
+(defn has-a-lesser [description attribute]
+  (has-a-smaller description attribute))
+
 (defn has-no [description attribute]
   "Create a new piece of data with an empty value for attribute. Empty string for strings,
    zero for numbers, and [] for vectors."

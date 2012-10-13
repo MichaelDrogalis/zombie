@@ -80,7 +80,7 @@
 
 (fact
  (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
-       plain     (is-like pepperoni (but-it (has-a-smaller :price)
+       plain     (is-like pepperoni (but-it (has-a-lesser :price)
                                             (has-no :toppings)))]
    (< (:price plain) (:price pepperoni)))
  => true)
