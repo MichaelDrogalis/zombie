@@ -73,7 +73,8 @@
  (fact (count all) => 3)
  (fact (apply not= all) => true))
 
-(spawn
+(mass-spawn
+ {:n 50}
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
  (fact (:age mike) =not=> (:age owen)))
