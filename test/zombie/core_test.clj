@@ -73,6 +73,11 @@
  (fact (count all) => 3)
  (fact (apply not= all) => true))
 
+(specified-by
+ [mike {:age 21}
+  owen (is-like mike (but-it (has-a-different :age)))]
+ (fact (:age mike) =not=> (:age owen)))
+
 (fact
  (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
        plain     (is-like pepperoni (but-it (has-a-smaller :price)
