@@ -90,8 +90,7 @@
 (defn generated-exprs [exprs]
   (vec (concat exprs (vec ['all (into [] (take-nth 2 (drop 1 exprs)))]))))
 
-(defmacro specified-by [exprs & body]
+(defmacro spawn [exprs & body]
   "Given a vector of pairs ([a b c d]), gives access to a var called 'all'. Useful for
    handling anonymously named pieces of data, often called '_'."
   `(let ~(generated-exprs exprs) ~@body))
-
