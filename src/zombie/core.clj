@@ -1,5 +1,6 @@
 (ns zombie.core
-  (:require [clj-time.core :as time]))
+  (:require [clj-time.core :as time]
+            [clojure.pprint :refer :all]))
 
 (defmacro is-like [description & disparity]
   "Produce a new piece of data relaltive to description."
@@ -128,5 +129,7 @@
      (let ~(generated-exprs exprs)
        ~@body
        (if (= ~mode :loud)
-         (println "Test case " n# ": " ~(generated-exprs exprs))))))
+         (do
+           (pprint (str "Test case " n#))
+           (pprint ~(generated-exprs exprs)))))))
   
