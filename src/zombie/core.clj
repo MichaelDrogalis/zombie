@@ -17,36 +17,36 @@
 
 (defprotocol Differentiate
   "Protocol for how to birth new values from old ones"
-  (birth-a-different [this description attribute])
-  (empty-value-for [this description attribute]))
+  (morph [this description attribute])
+  (identity-element [this description attribute]))
 
 (extend-type Number
   Differentiate
-  (birth-a-different
+  (morph
    [this description attribute]
    (assoc description attribute (inc (attribute description))))
-  (empty-value-for
+  (identity-element
    [this description attribute]
    (assoc description attribute 0)))
 
 (extend-type String
   Differentiate
-  (birth-a-different
+  (morph
    [this description attribute]
    (assoc description attribute (str (attribute description) "x")))
-  (empty-value-for
+  (identity-element
    [this description attribute]
    (assoc description attribute "")))
 
 (extend-type clojure.lang.PersistentVector
   Differentiate
-  (empty-value-for
+  (identity-element
    [this description attribute]
    (assoc description attribute []))) 
 
 (defn has-a-different [description attribute]
   "Create a new piece of data with a different attribute. Accepts Numbers and Strings."
-  (birth-a-different (attribute description) description attribute))
+  (morph (attribute description) description attribute))
 
 (defn has-a-smaller [description attribute]
   "Create a new piece of data with a smaller numeric value for attribute."
@@ -62,7 +62,7 @@
 (defn has-no [description attribute]
   "Create a new piece of data with an empty value for attribute. Empty string for strings,
    zero for numbers, and [] for vectors."
-  (empty-value-for (attribute description) description attribute))
+  (identity-element (attribute description) description attribute))
 
 (defn has-a-nil [description attribute]
   "Create a new piece of data with nil for the attribute."
