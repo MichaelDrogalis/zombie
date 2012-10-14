@@ -61,19 +61,21 @@
    (:dinner-reservations owen) => (time/date-time 2012 8 28)))
 
 (spawn
+ {}
  [mike {:age 21}
   owen {:age 28}
   bill {:age 30}]
  (fact all => [mike owen bill]))
 
 (spawn
+ {}
  [my-expectations {:grade :A}
   _               {:grade :B}
   _               {:grade :C}]
  (fact (count all) => 3)
  (fact (apply not= all) => true))
 
-(mass-spawn
+(spawn
  {:n 50}
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
