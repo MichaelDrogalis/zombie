@@ -76,7 +76,7 @@
  (fact (apply not= all) => true))
 
 (spawn
- {:n 50}
+ {:n 50 :mode :quiet}
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
  (fact (:age mike) =not=> (:age owen)))
