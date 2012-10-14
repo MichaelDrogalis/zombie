@@ -20,11 +20,20 @@
   (morph [this description attribute])
   (identity-element [this description attribute]))
 
+(defn random-integer []
+  (+ Integer/MIN_VALUE (bigint (* (rand) (+ 1 (- Integer/MAX_VALUE Integer/MIN_VALUE))))))
+
+(defn any-integer-but [n]
+  (let [k (random-integer)]
+    (if (not= n k)
+      k
+      (recur n))))
+
 (extend-type Number
   Morph
   (morph
    [this description attribute]
-   (assoc description attribute (inc (attribute description))))
+   (assoc description attribute (any-integer-but (attribute description)))) 
   (identity-element
    [this description attribute]
    (assoc description attribute 0)))
@@ -51,10 +60,10 @@
 (defn has-a-smaller [description attribute]
   "Create a new piece of data with a smaller numeric value for attribute."
   (assoc description attribute (+
-                                (Integer/MIN_VALUE)
+                                Integer/MIN_VALUE
                                 (int (* (rand)
                                         (- (attribute description)
-                                           (Integer/MIN_VALUE)))))))
+                                           Integer/MIN_VALUE))))))
 
 (defn has-a-lesser [description attribute]
   (has-a-smaller description attribute))
