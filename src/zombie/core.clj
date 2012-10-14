@@ -15,13 +15,13 @@
 (defmacro but-she [description & disparities]
   `(but-it ~description ~@disparities))
 
-(defprotocol Differentiate
+(defprotocol Morph
   "Protocol for how to birth new values from old ones"
   (morph [this description attribute])
   (identity-element [this description attribute]))
 
 (extend-type Number
-  Differentiate
+  Morph
   (morph
    [this description attribute]
    (assoc description attribute (inc (attribute description))))
@@ -30,7 +30,7 @@
    (assoc description attribute 0)))
 
 (extend-type String
-  Differentiate
+  Morph
   (morph
    [this description attribute]
    (assoc description attribute (str (attribute description) "x")))
@@ -39,7 +39,7 @@
    (assoc description attribute "")))
 
 (extend-type clojure.lang.PersistentVector
-  Differentiate
+  Morph
   (identity-element
    [this description attribute]
    (assoc description attribute []))) 
