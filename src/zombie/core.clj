@@ -38,11 +38,29 @@
    [this description attribute]
    (assoc description attribute 0)))
 
+(defn random-string []
+  (let [low-ascii-char 33
+        high-ascii-char 126
+        str-length (rand-int 50)]
+    (apply str
+           (map char
+                (take str-length (repeatedly
+                                  #(+
+                                    (rand-int
+                                     (- high-ascii-char low-ascii-char))
+                                    low-ascii-char)))))))
+
+(defn any-string-but [s]
+  (let [r (random-string)]
+    (if (not= s r)
+      r
+      (recur s))))
+
 (extend-type String
   Morph
   (morph
    [this description attribute]
-   (assoc description attribute (str (attribute description) "x")))
+   (assoc description attribute (any-string-but (attribute description))))
   (identity-element
    [this description attribute]
    (assoc description attribute "")))
