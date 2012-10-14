@@ -130,6 +130,8 @@
        ~@body
        (if (= ~mode :loud)
          (do
+           (println "---------------")
            (pprint (str "Test case " n#))
-           (pprint ~(generated-exprs exprs)))))))
+           (println "---------------")
+           (pprint ~'all))))))
   
