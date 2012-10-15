@@ -6,7 +6,7 @@ A Clojure framework to rapidly spawn data sets. Most of the time during testing,
 
 Add the following to your `:dependencies`
 
-    [zombie "0.1.1-SNAPSHOT"]
+    [zombie "0.2.0"]
 
 ## Usage
 
