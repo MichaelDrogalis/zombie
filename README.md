@@ -10,7 +10,7 @@ Add the following to your `:dependencies`
 
 ## Usage
 
-Here's a grossly simplified example of data creation with Zombie:
+Here's a basic example of data creation with Zombie:
 
 ```clojure
 (fact
