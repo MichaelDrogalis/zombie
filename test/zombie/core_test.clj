@@ -82,7 +82,7 @@
  (fact (apply not= zombies) => true))
 
 (spawn
- {:n 1 :mode :quiet}
+ {:n 1 :mode :loud}
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
  (fact (:age mike) =not=> (:age owen)))

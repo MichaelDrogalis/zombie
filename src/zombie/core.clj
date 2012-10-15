@@ -123,6 +123,7 @@
   "Given a vector of bindings ([a b c d]), gives access to a var called 'all'. Useful for
    handling anonymously named pieces of data, often called '_'."
   (let [name 'zombies]
+    (def binding-names (flatten (partition 1 2 b)))
     `(dotimes [n# ~n]
        (let ~(vec b)
          (def ~name (flatten (partition 1 2 ~b)))
@@ -132,5 +133,5 @@
              (println "===================================")
              (println "Test case " n#)
              (println "===================================")
-             (pprint ~'zombies)))))))
+             (println (map vector binding-names ~'zombies))))))))
 
