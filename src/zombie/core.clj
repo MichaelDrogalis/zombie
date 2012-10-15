@@ -119,19 +119,18 @@
   "Create a new piece of data with attribute one week in the future than it currently is."
   (birth-with-new-time description attribute time/plus time/weeks))
 
-(defn generated-exprs [exprs]
-  (vec (concat exprs (vec ['all (into [] (take-nth 2 (drop 1 exprs)))]))))
-
-(defmacro spawn [{:keys [n mode] :or {n 1 mode :quiet} :as options} exprs & body]
-  "Given a vector of pairs ([a b c d]), gives access to a var called 'all'. Useful for
+(defmacro spawn [{:keys [n mode] :or {n 1 mode :quiet} :as options} [bindings :as b] & body]
+  "Given a vector of bindings ([a b c d]), gives access to a var called 'all'. Useful for
    handling anonymously named pieces of data, often called '_'."
-  `(dotimes [n# ~n]
-     (let ~(generated-exprs exprs)
-       ~@body
-       (if (= ~mode :loud)
-         (do
-           (println "---------------")
-           (pprint (str "Test case " n#))
-           (println "---------------")
-           (pprint ~'all))))))
-  
+  (let [name 'zombies]
+    `(dotimes [n# ~n]
+       (let ~(vec b)
+         (def ~name (flatten (partition 1 2 ~b)))
+         ~@body
+         (if (= ~mode :loud)
+           (do
+             (println "===================================")
+             (println "Test case " n#)
+             (println "===================================")
+             (pprint ~'zombies)))))))
+
