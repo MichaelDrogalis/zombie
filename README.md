@@ -50,7 +50,7 @@ Time can be manipulated:
 ## Spawning
 
 A `spawn` function allows access to all the declared vars via a var named 'zombies'. Data can then be anonymously named.
-`spawn` is made to feel like the `let` form. However, it does not support destructing.
+`spawn` is made to feel like the `let` form. However, it does not support destructuring.
 
 ```clojure
 (spawn
