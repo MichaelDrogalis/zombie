@@ -1,4 +1,4 @@
-(defproject zombie "0.1.1-SNAPSHOT"
+(defproject zombie "0.2.0-SNAPSHOT"
   :description "Clojure test data specifications that won't make you want to punch a window."
   :url "https://github.com/MichaelDrogalis/zombie"
   :license {:name "Eclipse Public License"

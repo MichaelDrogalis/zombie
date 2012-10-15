@@ -1,5 +1,6 @@
 (ns zombie.core
-  (:require [clj-time.core :as time]))
+  (:require [clj-time.core :as time]
+            [clojure.pprint :refer :all]))
 
 (defmacro is-like [description & disparity]
   "Produce a new piece of data relaltive to description."
@@ -9,47 +10,87 @@
   "Articulate the differences between the two pieces of data."
   `(-> ~description ~@disparities))
 
-(defprotocol Differentiate
+(defmacro but-he [description & disparities]
+  `(but-it ~description ~@disparities))
+
+(defmacro but-she [description & disparities]
+  `(but-it ~description ~@disparities))
+
+(defprotocol Morph
   "Protocol for how to birth new values from old ones"
-  (birth-a-different [this description attribute])
-  (empty-value-for [this description attribute]))
+  (morph [this description attribute])
+  (identity-element [this description attribute]))
+
+(defn random-integer []
+  (+ Integer/MIN_VALUE (bigint (* (rand) (+ 1 (- Integer/MAX_VALUE Integer/MIN_VALUE))))))
+
+(defn any-integer-but [n]
+  (let [k (random-integer)]
+    (if (not= n k)
+      k
+      (recur n))))
 
 (extend-type Number
-  Differentiate
-  (birth-a-different
+  Morph
+  (morph
    [this description attribute]
-   (assoc description attribute (inc (attribute description))))
-  (empty-value-for
+   (assoc description attribute (any-integer-but (attribute description)))) 
+  (identity-element
    [this description attribute]
    (assoc description attribute 0)))
 
+(defn random-string []
+  (let [low-ascii-char 33
+        high-ascii-char 126
+        str-length (rand-int 50)]
+    (apply str
+           (map char
+                (take str-length (repeatedly
+                                  #(+
+                                    (rand-int
+                                     (- high-ascii-char low-ascii-char))
+                                    low-ascii-char)))))))
+
+(defn any-string-but [s]
+  (let [r (random-string)]
+    (if (not= s r)
+      r
+      (recur s))))
+
 (extend-type String
-  Differentiate
-  (birth-a-different
+  Morph
+  (morph
    [this description attribute]
-   (assoc description attribute (str (attribute description) "x")))
-  (empty-value-for
+   (assoc description attribute (any-string-but (attribute description))))
+  (identity-element
    [this description attribute]
    (assoc description attribute "")))
 
 (extend-type clojure.lang.PersistentVector
-  Differentiate
-  (empty-value-for
+  Morph
+  (identity-element
    [this description attribute]
    (assoc description attribute []))) 
 
 (defn has-a-different [description attribute]
   "Create a new piece of data with a different attribute. Accepts Numbers and Strings."
-  (birth-a-different (attribute description) description attribute))
+  (morph (attribute description) description attribute))
 
 (defn has-a-smaller [description attribute]
   "Create a new piece of data with a smaller numeric value for attribute."
-  (assoc description attribute (dec (attribute description))))
+  (assoc description attribute (+
+                                Integer/MIN_VALUE
+                                (int (* (rand)
+                                        (- (attribute description)
+                                           Integer/MIN_VALUE))))))
+
+(defn has-a-lesser [description attribute]
+  (has-a-smaller description attribute))
 
 (defn has-no [description attribute]
   "Create a new piece of data with an empty value for attribute. Empty string for strings,
    zero for numbers, and [] for vectors."
-  (empty-value-for (attribute description) description attribute))
+  (identity-element (attribute description) description attribute))
 
 (defn has-a-nil [description attribute]
   "Create a new piece of data with nil for the attribute."
@@ -78,11 +119,19 @@
   "Create a new piece of data with attribute one week in the future than it currently is."
   (birth-with-new-time description attribute time/plus time/weeks))
 
-(defn generated-exprs [exprs]
-  (vec (concat exprs (vec ['all (into [] (take-nth 2 (drop 1 exprs)))]))))
-
-(defmacro specified-by [exprs & body]
-  "Given a vector of pairs ([a b c d]), gives access to a var called 'all'. Useful for
+(defmacro spawn [{:keys [n mode] :or {n 1 mode :quiet} :as options} [bindings :as b] & body]
+  "Given a vector of bindings ([a b c d]), gives access to a var called 'all'. Useful for
    handling anonymously named pieces of data, often called '_'."
-  `(let ~(generated-exprs exprs) ~@body))
+  (let [name 'zombies]
+    (def binding-names (flatten (partition 1 2 b)))
+    `(dotimes [n# ~n]
+       (let ~(vec b)
+         (def ~name (flatten (partition 1 2 ~b)))
+         ~@body
+         (if (= ~mode :loud)
+           (do
+             (println "===================================")
+             (println "Test case " n#)
+             (println "===================================")
+             (println (map vector binding-names ~'zombies))))))))
 
