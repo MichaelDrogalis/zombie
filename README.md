@@ -13,11 +13,11 @@ Add the following to your `:dependencies`
 Here's a grossly simplified example of data creation with Zombie:
 
 ```clojure
-    (fact
-     (let [mike {:age 21}                                       ; mike => {:age 21}
-           bill (is-like mike (but-he (has-a-different :age)))] ; bill => {:age <n != 21>}
-       (not= (:age mike) (:age bill)))
-     => true)
+(fact
+ (let [mike {:age 21}                                       ; mike => {:age 21}
+       bill (is-like mike (but-he (has-a-different :age)))] ; bill => {:age <n != 21>}
+   (not= (:age mike) (:age bill)))
+ => true)
 ```
 
 Data can be "molded" with the following functions:
@@ -40,11 +40,11 @@ Data can be manipulated with the following functions:
 Time can be manipulated:
 
 ```clojure
-    (fact
-     (let [mike {:birthday (time/date-time 1991 1 13)}
-           owen (is-like mike (but-he (has-an-earlier :birthday)))]
-       (time/before? (:birthday owen) (:birthday mike)))
-     => true)
+(fact
+ (let [mike {:birthday (time/date-time 1991 1 13)}
+       owen (is-like mike (but-he (has-an-earlier :birthday)))]
+   (time/before? (:birthday owen) (:birthday mike)))
+ => true)
 ```clojure
 
 ## Spawning
@@ -53,13 +53,13 @@ A `spawn` function allows access to all the declared vars via a var named 'zombi
 `spawn` is made to feel like the `let` form. However, it does not support destructing.
 
 ```clojure
-    (spawn
-     {} ; Options, explained below
-     [my-expectations {:grade :A}
-      _               {:grade :B}
-      _               {:grade :C}]
-     (fact (count zombies) => 3)
-     (fact (apply not= zombies) => true))
+(spawn
+ {} ; Options, explained below
+ [my-expectations {:grade :A}
+  _               {:grade :B}
+  _               {:grade :C}]
+ (fact (count zombies) => 3)
+ (fact (apply not= zombies) => true))
 ```
     
 Check out the [tests](https://github.com/MichaelDrogalis/zombie/blob/master/test/zombie/core_test.clj) for more examples.
@@ -93,21 +93,21 @@ This will run 50 facts, where the `:age` of `owen` is different each time, but a
 For functions `has-no` and `has-a-different`, the API can be extended to dispatch to specific types. Suppose you wanted an implementation of `has-no` to work on a map:
 
 ```clojure
-    (extend-type clojure.lang.PersistentArrayMap
-      Differentiate
-      (empty-value-for
-       [this description attribute]
-       (assoc description attribute {})))
+(extend-type clojure.lang.PersistentArrayMap
+  Differentiate
+  (empty-value-for
+   [this description attribute]
+   (assoc description attribute {})))
 ```
 
 Then you could do:
 
 ```clojure
-    (fact
-     (let [mike {:grades {:math :B :science :A :english :A}}
-           some-dude (is-like mike (but-he (has-no :grades)))]
-       (empty? (:grade some-dude)))
-     => true)
+(fact
+ (let [mike {:grades {:math :B :science :A :english :A}}
+       some-dude (is-like mike (but-he (has-no :grades)))]
+   (empty? (:grade some-dude)))
+ => true)
 ```
 
 ## Contribute
