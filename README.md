@@ -90,7 +90,7 @@ This will run 50 facts, where the `:age` of `owen` is different each time, but a
 
 ## Extending the API
 
-For functions `has-no` and `has-a-different`, the API can be extended to dispatch to specific types. Suppose you wanted an implementation of `has-no` to work on a map:
+For functions such as `has-no` and `has-a-different`, the API can be extended to dispatch to specific types. Suppose you wanted an implementation of `has-no` to work on a map:
 
 ```clojure
 (extend-type clojure.lang.PersistentArrayMap
