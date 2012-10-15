@@ -94,8 +94,8 @@ For functions such as `has-no` and `has-a-different`, the API can be extended to
 
 ```clojure
 (extend-type clojure.lang.PersistentArrayMap
-  Differentiate
-  (empty-value-for
+  Morph
+  (identity-element
    [this description attribute]
    (assoc description attribute {})))
 ```
