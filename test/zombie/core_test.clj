@@ -69,6 +69,12 @@
 
 (spawn
  {}
+ [mike {:age 21}
+  owen (is-like mike (but-he (has-a-different :age)))]
+ (fact (:age owen) => (:age (second zombies))))
+
+(spawn
+ {}
  [my-expectations {:grade :A}
   _               {:grade :B}
   _               {:grade :C}]
@@ -80,13 +86,6 @@
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
  (fact (:age mike) =not=> (:age owen)))
-
-(spawn
- {}
- [mike {:age 21}
-  owen (is-like mike (but-he (has-a-different :age)))]
- (fact (:age owen) => (:age (second zombies))))
-
 
 (fact
  (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
