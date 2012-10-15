@@ -45,7 +45,7 @@ Time can be manipulated:
        owen (is-like mike (but-he (has-an-earlier :birthday)))]
    (time/before? (:birthday owen) (:birthday mike)))
  => true)
-```clojure
+```
 
 ## Spawning
 
