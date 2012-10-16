@@ -1,6 +1,6 @@
 # zombie
 
-A Clojure framework to rapidly spawn data sets. Most of the time during testing, you don't care about the concrete differences among data. Test cases can be simplified by amplifying the differences between data, while at the same time ignoring any similiarities. It's sort of like [QuickCheck](http://www.haskell.org/haskellwiki/Introduction_to_QuickCheck). This is best shown by the examples below.
+A Clojure framework to rapidly spawn data sets. Sometimes during testing, concrete values don't matter. All that matters is semantics. Capture the essence of your test cases with zombie. See below for usage.
 
 ## Installation
 
@@ -10,17 +10,31 @@ Add the following to your `:dependencies`
 
 ## Usage
 
-Here's a basic example of data creation with Zombie:
+A little session at the REPL shows how to leverage Zombie to make new data.
 
 ```clojure
-(fact
- (let [mike {:age 21}                                       ; mike => {:age 21}
-       bill (is-like mike (but-he (has-a-different :age)))] ; bill => {:age <n != 21>}
-   (not= (:age mike) (:age bill)))
- => true)
+user=> (def mike {:nickname "Dro"})
+#'user/mike
+user=> (def john (is-like mike (but-he (has-a-different :nickname))))
+#'user/john
+user=> mike
+{:nickname "Dro"}
+user=> john
+{:nickname "{xl#X:YnO%5(YH@A2Zwg)rcM8x@}U|$%F"}
 ```
 
-Data can be "molded" with the following functions:
+```clojure
+user=> (def mike {:age 21})
+#'user/mike
+user=> (def john (is-like mike (but-he (has-a-different :age))))
+#'user/john
+user=> mike
+{:age 21}
+user=> john
+{:age -138146015N}
+```
+
+Data can be "modeled" with the following functions:
 
     is-like
     but-it
@@ -37,7 +51,7 @@ Data can be manipulated with the following functions:
     has-an-earlier
     has-a-later
 
-Time can be manipulated:
+Time can be manipulated. Here I use the testing framework [Midje](https://github.com/marick/Midje):
 
 ```clojure
 (fact
@@ -49,7 +63,7 @@ Time can be manipulated:
 
 ## Spawning
 
-A `spawn` function allows access to all the declared vars via a var named 'zombies'. Data can then be anonymously named.
+The `spawn` function allows access to all the declared vars via a var named 'zombies'. Data can then be anonymously named.
 `spawn` is made to feel like the `let` form. However, it does not support destructuring.
 
 ```clojure
@@ -87,6 +101,33 @@ The mode to run `spawn` in. The default mode is `:quiet`. The `:loud` mode write
 ```
 
 This will run 50 facts, where the `:age` of `owen` is different each time, but always obeying the rule that it never equals `(:age mike`).
+
+Perhaps more clearly at the REPL:
+
+```clojure
+user=> (spawn {:n 5 :mode :loud} [mike {:name "Mike"} owen (is-like mike (but-he (has-a-different :name)))])
+===================================
+Test case  0
+===================================
+([mike {:name Mike}] [owen {:name c.gwb3pGO<{^!gC}])
+===================================
+Test case  1
+===================================
+([mike {:name Mike}] [owen {:name c8NTSxrs9EP&yC5M2#Q[yl7F-C`A}?<XPX:\{\|&&5r=U}])
+===================================
+Test case  2
+===================================
+([mike {:name Mike}] [owen {:name UlmmpI5{j'y4C2v<N/L]3I0^*}])
+===================================
+Test case  3
+===================================
+([mike {:name Mike}] [owen {:name z0YQy7iv[/nDKGxui}])
+===================================
+Test case  4
+===================================
+([mike {:name Mike}] [owen {:name C(l{Ajbvz-`|O}])
+nil
+```
 
 ## Extending the API
 
