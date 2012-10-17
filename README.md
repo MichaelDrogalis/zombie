@@ -71,6 +71,7 @@ Data can be manipulated with the following functions:
     
     has-a-different
     has-a-smaller
+    has-a-lesser
     has-no
     has-a-nil
     has-a
