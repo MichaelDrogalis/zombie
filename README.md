@@ -10,7 +10,7 @@ Add the following to your `:dependencies`
 
 ## Usage
 
-Let's say I have a function:
+I'll motivate the usage by first demonstrating zombie's full power. Later we'll break it down. Let's say I have a function:
 
 ```clojure
 (defn alcohol-legal [people]
@@ -26,7 +26,7 @@ I could write a test such as:
     (is (= [mike] (alcohol-legal [mike pete])))))
 ```
 
-But what's the essence of the test? Does Pete's name matter? Does the fact that he's *exactly* 18 matter? Nope. All the amtters is that there's someone else that's under 21. Declarative semantic transformations do this better.
+But what's the essence of the test? Does Pete's name matter? Does the fact that he's *exactly* 18 matter? Nope. All the matters is that there's someone else that's under 21. Declarative semantic transformations do this better.
 
 ```clojure
 (deftest mike-is-legal
