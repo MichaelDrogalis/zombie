@@ -1,6 +1,6 @@
 # zombie
 
-A Clojure framework to rapidly spawn data sets. Sometimes during testing, concrete values don't matter. All that matters is semantics. Capture the essence of your test cases with zombie. See below for usage.
+A Clojure framework for declarative semantic data transformation. Sometimes during testing, concrete values don't matter. All that matters is semantics. Capture the essence of your test cases with zombie. See below for usage.
 
 ## Installation
 
@@ -9,6 +9,32 @@ Add the following to your `:dependencies`
     [zombie "0.2.0"]
 
 ## Usage
+
+Let's say I have a function:
+
+```clojure
+(defn alcohol-legal [people]
+  (filter #(>= (:age %) 21) people))
+```
+
+I could write a test such as:
+
+```clojure
+(deftest mike-is-legal
+  (let [mike {:name "Mike" :age 21}
+        pete {:name "Pete" :age 18}]
+    (is (= [mike] (alcohol-legal [mike pete])))))
+```
+
+But what's the essence of the test? Does Pete's name matter? Does the fact that he's *exactly* 18 matter? Nope. All the amtters is that there's someone else that's under 21. Declarative semantic transformations do this better.
+
+```clojure
+(deftest mike-is-legal
+  (spawn {}
+         [mike {:name "Mike" :age 21}
+          _    (is-like mike (but-he (has-a-smaller :age)))]
+    (is (= [mike] (alcohol-legal zombies)))))
+```
 
 A little session at the REPL shows how to leverage Zombie to make new data.
 
