@@ -32,7 +32,7 @@ But what's the essence of the test? Does Pete's name matter? Does the fact that 
 (deftest mike-is-legal
   (spawn {}
          [mike {:name "Mike" :age 21}
-          _    (is-like mike (but-he (has-a-smaller :age)))]
+          _    (is-like mike (but-he (has-a-lesser :age)))]
     (is (= [mike] (alcohol-legal zombies)))))
 ```
 
