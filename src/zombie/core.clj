@@ -2,18 +2,24 @@
   (:require [clj-time.core :as time]
             [clojure.pprint :refer :all]))
 
-(defmacro is-like [description & disparity]
+(defmacro is-like
   "Produce a new piece of data relaltive to description."
+  [description & disparity]
   `(-> ~description ~@disparity))
 
-(defmacro but-it [description & disparities]
+(defmacro but-it
   "Articulate the differences between the two pieces of data."
+  [description & disparities]
   `(-> ~description ~@disparities))
 
-(defmacro but-he [description & disparities]
+(defmacro but-he
+  "Alias for but-it."
+  [description & disparities]
   `(but-it ~description ~@disparities))
 
-(defmacro but-she [description & disparities]
+(defmacro but-she
+  "Alias for but-it."
+  [description & disparities]
   `(but-it ~description ~@disparities))
 
 (defprotocol Morph
@@ -42,14 +48,9 @@
 (defn random-string []
   (let [low-ascii-char 33
         high-ascii-char 126
-        str-length (rand-int 50)]
-    (apply str
-           (map char
-                (take str-length (repeatedly
-                                  #(+
-                                    (rand-int
-                                     (- high-ascii-char low-ascii-char))
-                                    low-ascii-char)))))))
+        str-length (rand-int 50)
+        infinite-char-seq (repeatedly #(+ (rand-int (- high-ascii-char low-ascii-char)) low-ascii-char))]
+    (apply str (map char (take str-length infinite-char-seq)))))
 
 (defn any-string-but [s]
   (let [r (random-string)]
@@ -72,67 +73,79 @@
    [this description attribute]
    (assoc description attribute []))) 
 
-(defn has-a-different [description attribute]
+(defn has-a-different
   "Create a new piece of data with a different attribute. Accepts Numbers and Strings."
+  [description attribute]
   (morph (attribute description) description attribute))
 
-(defn has-a-smaller [description attribute]
+(defn has-a-smaller
   "Create a new piece of data with a smaller numeric value for attribute."
-  (assoc description attribute (+
-                                Integer/MIN_VALUE
-                                (int (* (rand)
-                                        (- (attribute description)
-                                           Integer/MIN_VALUE))))))
+  [description attribute]
+  (assoc description attribute (+ Integer/MIN_VALUE (int (* (rand) (- (attribute description) Integer/MIN_VALUE))))))
 
-(defn has-a-lesser [description attribute]
+(defn has-a-lesser
+  "Alias for has-a-smaller."
+  [description attribute]
   (has-a-smaller description attribute))
 
-(defn has-no [description attribute]
+(defn has-no
   "Create a new piece of data with an empty value for attribute. Empty string for strings,
    zero for numbers, and [] for vectors."
+  [description attribute]
   (identity-element (attribute description) description attribute))
 
-(defn has-a-nil [description attribute]
+(defn has-a-nil
   "Create a new piece of data with nil for the attribute."
+  [description attribute]
   (assoc description attribute nil))
 
-(defn has-a [description attribute value]
+(defn has-a
   "Create a new piece of data with value for attribute."
+  [description attribute value]
   (assoc description attribute value))
 
-(defn birth-with-new-time [description attribute f units]
+(defn birth-with-new-time
+  "Create a new piece of data with a concrete time defined by the function f and units."
+  [description attribute f units]
   (assoc description attribute (f (attribute description) (units 1))))
 
-(defn has-an-earlier [description attribute]
+(defn has-an-earlier
   "Create a new piece of data with an arbitrarily earlier DateTime for attribute (further in past)."
+  [description attribute]
   (birth-with-new-time description attribute time/minus time/months))
 
-(defn has-a-later [description attribute]
+(defn has-a-later
   "Create a new piece of data with an arbitrarily later DateTime for attribute (further in future)."
+  [description attribute]
   (birth-with-new-time description attribute time/plus time/months))
 
-(defn has-one-day-later [description attribute]
+(defn has-one-day-later
   "Create a new piece of data with attribute one day in the future than it currently is."
+  [description attribute]
   (birth-with-new-time description attribute time/plus time/days))
 
-(defn has-one-week-later [description attribute]
+(defn has-one-week-later
   "Create a new piece of data with attribute one week in the future than it currently is."
+  [description attribute]
   (birth-with-new-time description attribute time/plus time/weeks))
 
-(defn shout-data! [n handles aggregation]
+(defn shout-data!
+  "Writes the concrete data used to standard out."
+  [n handles aggregation]
   (println "===================================")
   (println "Test case " n)
   (println "===================================")
   (println (map vector handles aggregation)))
 
-(defmacro spawn [{:keys [n mode aggregate] :or {n 1 mode :quiet aggregate 'zombies} :as options} bindings & body]
+(defmacro spawn
   "Given a vector of bindings ([a b c d]), gives access to a var called 'all'. Useful for
    handling anonymously named pieces of data, often called '_'."
+  [{:keys [n mode aggregate] :or {n 1 mode :quiet aggregate 'zombies} :as options} bindings & body]
   (def binding-names (flatten (partition 1 2 bindings)))
   `(dotimes [n# ~n]
      (let ~(vec bindings)
        (let [~aggregate (flatten (partition 1 2 ~bindings))]
-            ~@body
-            (if (= ~mode :loud)
-              (shout-data! n# binding-names ~aggregate))))))
+         ~@body
+         (if (= ~mode :loud)
+           (shout-data! n# binding-names ~aggregate))))))
 
