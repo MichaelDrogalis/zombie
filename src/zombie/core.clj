@@ -131,8 +131,8 @@
   (def binding-names (flatten (partition 1 2 bindings)))
   `(dotimes [n# ~n]
      (let ~(vec bindings)
-       (def ~aggregate (flatten (partition 1 2 ~bindings)))
-       ~@body
-       (if (= ~mode :loud)
-         (shout-data! n# binding-names ~aggregate)))))
+       (let [~aggregate (flatten (partition 1 2 ~bindings))]
+            ~@body
+            (if (= ~mode :loud)
+              (shout-data! n# binding-names ~aggregate))))))
 
