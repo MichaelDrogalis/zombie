@@ -6,7 +6,7 @@ A Clojure framework for declarative semantic data transformation. Sometimes duri
 
 Add the following to your `:dependencies`
 
-    [zombie "0.2.0"]
+    [zombie "0.2.1"]
 
 ## Usage
 
