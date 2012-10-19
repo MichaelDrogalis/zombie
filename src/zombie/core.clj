@@ -119,6 +119,12 @@
   "Create a new piece of data with attribute one week in the future than it currently is."
   (birth-with-new-time description attribute time/plus time/weeks))
 
+(defn shout-data! [n handles aggregation]
+  (println "===================================")
+  (println "Test case " n)
+  (println "===================================")
+  (println (map vector handles aggregation)))
+
 (defmacro spawn [{:keys [n mode aggregate] :or {n 1 mode :quiet aggregate 'zombies} :as options} bindings & body]
   "Given a vector of bindings ([a b c d]), gives access to a var called 'all'. Useful for
    handling anonymously named pieces of data, often called '_'."
@@ -128,9 +134,5 @@
        (def ~aggregate (flatten (partition 1 2 ~bindings)))
        ~@body
        (if (= ~mode :loud)
-         (do
-           (println "===================================")
-           (println "Test case " n#)
-           (println "===================================")
-           (println (map vector binding-names ~aggregate)))))))
+         (shout-data! n# binding-names ~aggregate)))))
 
