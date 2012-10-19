@@ -87,6 +87,12 @@
   owen (is-like mike (but-he (has-a-different :age)))]
  (fact (:age mike) =not=> (:age owen)))
 
+(spawn
+ {:aggregate all-vars}
+ [mike {:age 21}
+  derek {:age 24}]
+ (fact [mike derek] => all-vars))
+
 (fact
  (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
        plain     (is-like pepperoni (but-it (has-a-lesser :price)

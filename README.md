@@ -90,14 +90,19 @@ The number of tests to run. The data will be different each time. Defaults to 1.
 
 The mode to run `spawn` in. The default mode is `:quiet`. The `:loud` mode writes the data used for each test to the console.
 
+### :aggregate
+
+Configure the name for the aggregate var. Defaults to `zombies`.
+
 ### Example
 
 ```clojure
 (spawn
- {:n 50 :mode :loud}
+ {:n 50 :mode :loud :aggregate all-the-vars}
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
- (fact (:age mike) =not=> (:age owen)))
+ (fact (:age mike) =not=> (:age owen))
+ (fact [mike owen] => all-the-vars))
 ```
 
 This will run 50 facts, where the `:age` of `owen` is different each time, but always obeying the rule that it never equals `(:age mike`).
