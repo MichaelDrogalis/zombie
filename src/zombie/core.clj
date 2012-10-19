@@ -133,5 +133,5 @@
              (println "===================================")
              (println "Test case " n#)
              (println "===================================")
-             (println (map vector binding-names ~'zombies))))))))
+             (println (map vector binding-names ~name))))))))
 
