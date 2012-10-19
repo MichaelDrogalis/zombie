@@ -1,5 +1,5 @@
 (defproject zombie "0.2.0"
-  :description "Clojure test data specifications that won't make you want to punch a window."
+  :description "Clojure declarative semantic data transformations made easy."
   :url "https://github.com/MichaelDrogalis/zombie"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
