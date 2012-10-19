@@ -1,4 +1,4 @@
-(defproject zombie "0.2.0"
+(defproject zombie "0.2.1"
   :description "Clojure declarative semantic data transformations made easy."
   :url "https://github.com/MichaelDrogalis/zombie"
   :license {:name "Eclipse Public License"
