@@ -188,7 +188,7 @@ Then you could do:
 Have a function in mind to mold data or extend the API in a good direction? Fork this and pull request, because I probably want it.
 
 ### To do
-- More data manipulation functions (has-a-greater, has-in-range, has-any-positive-integer, etc)
+- More data manipulation functions (`has-a-greater`, `has-in-range`, `has-any-positive-integer`, etc)
 - Exclude Midje from the README. It'll make reading this doc much easier
 - Let spawn take no options and use defaults, or read from a config file
 
