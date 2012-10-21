@@ -9,7 +9,8 @@
                  [com.stuartsierra/lazytest "1.2.3"]
                  [clj-time "0.4.4"]
                  [configleaf "0.4.6"]]
-  :zombie {:aggregate aggregate}
+  :injections [(use 'zombie.core)
+               (default-config! {:aggregate aggregate :n 20 :mode :quiet})]
   :plugins [[lein-swank "1.4.4"]
             [lein-midje "2.0.0-SNAPSHOT"]])
   

@@ -93,6 +93,11 @@
   derek {:age 24}]
  (fact [mike derek] => all-vars))
 
+(spawn
+ [mike {:age 21}
+  derek (is-like mike (but-he (has-a-different :age)))]
+ (fact (:age mike) =not=> (:age derek)))
+
 (fact
  (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
        plain     (is-like pepperoni (but-it (has-a-lesser :price)
