@@ -137,7 +137,7 @@
   (println "===================================")
   (println (map vector handles aggregation)))
 
-(defmacro spawn
+(defmacro spawn-with
   "Given a vector of bindings ([a b c d]), gives access to a var called 'all'. Useful for
    handling anonymously named pieces of data, often called '_'."
   [{:keys [n mode aggregate] :or {n 1 mode :quiet aggregate 'zombies} :as options} bindings & body]
