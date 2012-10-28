@@ -10,3 +10,4 @@ pom.xml.asc
 .lein-failures
 .lein-plugins
 *.clj#
+.zombie-config.clj
