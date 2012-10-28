@@ -161,27 +161,6 @@ Test case  4
 nil
 ```
 
-## Global Options
-
-You can use global options with the `spawn` function, rather than specifying them on a function-by-function basis with `spawn-with`.
-
-In project.clj:
-```clojure
-  :injections [(use 'zombie.core)
-               (default-config! {:aggregate aggregate :n 20 :mode :quiet})]
-```
-
-Zombie will generate a file named `.zombie-config.clj`. I recommend putting it in your `.gitignore` as it's generated each run.
-
-Then it is as easy as:
-
-```clojure
-(spawn
-  [mike {:name "mike"}
-   derek (is-like mike (but-he (has-a-different :name)))]
-  (fact (:name mike) =not=> (:name derek)))
-```
-
 ## Extending the API
 
 For functions such as `has-no` and `has-a-different`, the API can be extended to dispatch to specific types. Suppose you wanted an implementation of `has-no` to work on a map:
