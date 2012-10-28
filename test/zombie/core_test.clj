@@ -60,20 +60,20 @@
        owen (is-like mike (but-he (has-one-week-later :dinner-reservations)))]
    (:dinner-reservations owen) => (time/date-time 2012 8 28)))
 
-(spawn-with
+(spawn
  {}
  [mike {:age 21}
   owen {:age 28}
   bill {:age 30}]
  (fact zombies => [mike owen bill]))
 
-(spawn-with
+(spawn
  {}
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
  (fact (:age owen) => (:age (second zombies))))
 
-(spawn-with
+(spawn
  {}
  [my-expectations {:grade :A}
   _               {:grade :B}
@@ -81,13 +81,13 @@
  (fact (count zombies) => 3)
  (fact (apply not= zombies) => true))
 
-(spawn-with
+(spawn
  {:n 1 :mode :quiet}
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
  (fact (:age mike) =not=> (:age owen)))
 
-(spawn-with
+(spawn
  {:aggregate all-vars}
  [mike {:age 21}
   derek {:age 24}]
