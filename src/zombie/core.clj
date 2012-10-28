@@ -140,7 +140,7 @@
 (defmacro spawn
   "Given a vector of bindings ([a b c d]), gives access to a var called 'all'. Useful for
    handling anonymously named pieces of data, often called '_'."
-  [{:keys [n mode aggregate] :or {n 1 mode :quiet aggregate 'zombies} :as options} bindings & body]
+  [bindings body & {:keys [n mode aggregate] :or {n 1 mode :quiet aggregate 'zombies} :as options}]
   (def binding-names (flatten (partition 1 2 bindings)))
   `(dotimes [n# ~n]
      (let ~(vec bindings)

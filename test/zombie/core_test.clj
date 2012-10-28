@@ -61,37 +61,34 @@
    (:dinner-reservations owen) => (time/date-time 2012 8 28)))
 
 (spawn
- {}
  [mike {:age 21}
   owen {:age 28}
   bill {:age 30}]
- (fact zombies => [mike owen bill]))
+ (do (fact zombies => [mike owen bill])))
 
 (spawn
- {}
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
- (fact (:age owen) => (:age (second zombies))))
+ (do (fact (:age owen) => (:age (second zombies)))))
 
 (spawn
- {}
  [my-expectations {:grade :A}
   _               {:grade :B}
   _               {:grade :C}]
- (fact (count zombies) => 3)
- (fact (apply not= zombies) => true))
+ (do (fact (count zombies) => 3)
+     (fact (apply not= zombies) => true)))
 
 (spawn
- {:n 1 :mode :quiet}
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
- (fact (:age mike) =not=> (:age owen)))
+ (do (fact (:age mike) =not=> (:age owen)))
+ :n 1 :mode :quiet)
 
 (spawn
- {:aggregate all-vars}
  [mike {:age 21}
   derek {:age 24}]
- (fact [mike derek] => all-vars))
+ (do (fact [mike derek] => all-vars))
+ :aggregate all-vars)
 
 (fact
  (let [pepperoni {:price 9.99 :toppings ["pepperoni"] :size :medium}
