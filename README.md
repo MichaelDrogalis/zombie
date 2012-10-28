@@ -57,7 +57,7 @@ user=> (def john (is-like mike (but-he (has-a-different :age))))
 user=> mike
 {:age 21}
 user=> john
-{:age -138146015N}
+{:age 54N}
 ```
 
 Data can be "modeled" with the following functions:
@@ -99,15 +99,16 @@ The `spawn` function allows access to all the declared vars via a var named 'zom
  [my-expectations {:grade :A}
   _               {:grade :B}
   _               {:grade :C}]
- (fact (count zombies) => 3)
- (fact (apply not= zombies) => true))
+ (do
+   (fact (count zombies) => 3)
+   (fact (apply not= zombies) => true)))
 ```
     
 Check out the [tests](https://github.com/MichaelDrogalis/zombie/blob/master/test/zombie/core_test.clj) for more examples.
 
 ## Options
 
-On a test by test basis, spawn takes a options map.
+`spawn` takes an options map as it's last parameter for runtime configurability.
 
 ### :n
 
@@ -125,11 +126,12 @@ Configure the name for the aggregate var. Defaults to `zombies`.
 
 ```clojure
 (spawn
- {:n 50 :mode :loud :aggregate all-the-vars}
  [mike {:age 21}
   owen (is-like mike (but-he (has-a-different :age)))]
- (fact (:age mike) =not=> (:age owen))
- (fact [mike owen] => all-the-vars))
+ (do
+   (fact (:age mike) =not=> (:age owen))
+   (fact [mike owen] => all-the-vars))
+ {:n 50 :mode :loud :aggregate all-the-vars})
 ```
 
 This will run 50 facts, where the `:age` of `owen` is different each time, but always obeying the rule that it never equals `(:age mike`).
@@ -137,7 +139,7 @@ This will run 50 facts, where the `:age` of `owen` is different each time, but a
 Perhaps more clearly at the REPL:
 
 ```clojure
-user=> (spawn {:n 5 :mode :loud} [mike {:name "Mike"} owen (is-like mike (but-he (has-a-different :name)))])
+user=> (spawn [mike {:name "Mike"} owen (is-like mike (but-he (has-a-different :name)))] (do) {:n 5 :mode :loud})
 ===================================
 Test case  0
 ===================================
