@@ -138,8 +138,8 @@
   (println (map vector handles aggregation)))
 
 (defmacro spawn-with
-  "Given a map of options and a vector of binding pairs ([a b c d]), gives access to an
-   aggregate var called 'zombies'. Useful for handling anonymously named pieces of data, often named '_'."
+  "Given a vector of bindings ([a b c d]), gives access to a var called 'all'. Useful for
+   handling anonymously named pieces of data, often called '_'."
   [{:keys [n mode aggregate] :or {n 1 mode :quiet aggregate 'zombies} :as options} bindings & body]
   (def binding-names (flatten (partition 1 2 bindings)))
   `(dotimes [n# ~n]
@@ -148,16 +148,4 @@
          ~@body
          (if (= ~mode :loud)
            (shout-data! n# binding-names ~aggregate))))))
-
-(def config-file-name ".zombie-config.clj")
-
-(defmacro default-config! [options]
-  `~(spit config-file-name options))
-
-(defmacro spawn
-  "Given a vector of binding pairs ([a b c d]), gives access to an aggregate
-   var called 'zombies'. Useful for handling anonymously named pieces of data, often named '_'.
-   Options are obtained from :injections in project.clj"
-  [bindings & body]
-  `(spawn-with ~(read-string (slurp config-file-name)) ~bindings ~@body))
 
